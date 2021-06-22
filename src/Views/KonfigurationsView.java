@@ -37,29 +37,43 @@ public class KonfigurationsView extends JFrame {
         spielerNamen.add(spieler2Name);
 
 
+        JPanel colRow = new JPanel();
+        colRow.setLayout(new GridLayout(1,2,15,15));
+
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(1);
+        formatter.setMinimum(5);
         formatter.setMaximum(10);
+        formatter.setValueClass(Integer.class);
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);
 
         JLabel spielfeld = new JLabel("Geben Sie die Spielfeldgrösse ein: (5x5 bis 10x10)");
-        JTextField spielfeldGroesse = new JFormattedTextField(formatter);
+
+
+        JTextField spielfeldRow = new JFormattedTextField(formatter);
+        spielfeldRow.setText("Anzahl Zeilen");
+        JTextField spielfeldCol = new JFormattedTextField(formatter);
+        spielfeldCol.setText("Anzahl Spalten");
+
+        colRow.add(spielfeldRow);
+        colRow.add(spielfeldCol);
+
 
 
         JButton start = new JButton("Start");
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SpielfeldView();
+                new SpielfeldView(Integer.parseInt(spielfeldRow.getText()),Integer.parseInt(spielfeldCol.getText()));
+                getFrame().dispose();
             }
         });
 
         JPanel buttons = new JPanel(new GridLayout(1,2,15,15));
         buttons.setMaximumSize(new Dimension(450,250));
         buttons.setAlignmentX(0.425f);
+
 
         JButton verlassen = new JButton("Verlassen");
         verlassen.addActionListener(new ActionListener() {
@@ -86,7 +100,7 @@ public class KonfigurationsView extends JFrame {
         mittelPanel.add(anzahlSpieler);
         mittelPanel.add(spielerNamen);
         mittelPanel.add(spielfeld);
-        mittelPanel.add(spielfeldGroesse);
+        mittelPanel.add(colRow);
         mittelPanel.add(start);
         mittelPanel.add(buttons);
 

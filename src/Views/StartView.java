@@ -54,7 +54,7 @@ public class StartView extends JFrame {
             if (e.getSource() == spielkonfigurieren){
                 new KonfigurationsView();
             }else {
-                new SpielfeldView();
+                new SpielfeldView(10, 10);
             }
             getFrame().dispose();
         }
