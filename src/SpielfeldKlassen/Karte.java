@@ -10,7 +10,7 @@ public class Karte {
     private boolean visible;
     private int id;
 
-    public Karte(boolean isTurned, int id){
+    public Karte(Image background,boolean isTurned, int id){
         setBackground(background);
         setTurned(isTurned);
         setVisible(false);

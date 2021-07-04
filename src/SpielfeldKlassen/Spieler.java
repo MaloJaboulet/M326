@@ -61,4 +61,5 @@ public class Spieler {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+
 }

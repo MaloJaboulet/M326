@@ -1,7 +1,10 @@
 package Views;
 
+import Model.Spielfeld;
+import SpielfeldKlassen.Spieler;
+
 import javax.swing.*;
-import javax.swing.border.Border;
+
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +18,7 @@ public class KonfigurationsView extends JFrame {
     private final String[] spielerAnzahl = {"Singleplayer", "2 Players"};
 
 
-    public KonfigurationsView(){
+    public KonfigurationsView() {
         this.setTitle("Konfiguration");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -23,22 +26,25 @@ public class KonfigurationsView extends JFrame {
         JLabel titel = new JLabel("Konfiguration des Spiels");
 
         JPanel mittelPanel = new JPanel();
-        mittelPanel.setLayout(new BoxLayout(mittelPanel,BoxLayout.Y_AXIS));
+        mittelPanel.setLayout(new BoxLayout(mittelPanel, BoxLayout.Y_AXIS));
 
         JComboBox anzahlSpieler = new JComboBox(spielerAnzahl);
-        anzahlSpieler.setSize(200,100);
+        anzahlSpieler.setSize(200, 100);
         anzahlSpieler.setSelectedIndex(0);
 
-        JPanel spielerNamen = new JPanel(new GridLayout(1,2,20,20));
-        TextField spieler1Name = new TextField("Name Spieler 1:");
-        TextField spieler2Name = new TextField("Name Spieler 2:");
+        JPanel spielerNamen = new JPanel(new GridLayout(1, 2, 20, 20));
+        spieler1Name = new JTextField("Name Spieler 1:");
+        spieler2Name = new JTextField("Name Spieler 2:");
 
         spielerNamen.add(spieler1Name);
         spielerNamen.add(spieler2Name);
 
+        Spieler spieler1 = new Spieler(spieler1Name.getText(), true);
+        Spieler spieler2 = new Spieler(spieler2Name.getText(), false);
+
 
         JPanel colRow = new JPanel();
-        colRow.setLayout(new GridLayout(1,2,15,15));
+        colRow.setLayout(new GridLayout(1, 2, 15, 15));
 
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
@@ -60,18 +66,23 @@ public class KonfigurationsView extends JFrame {
         colRow.add(spielfeldCol);
 
 
-
         JButton start = new JButton("Start");
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SpielfeldView(Integer.parseInt(spielfeldRow.getText()),Integer.parseInt(spielfeldCol.getText()));
+                Spielfeld spielfeld = new Spielfeld(Integer.parseInt(spielfeldRow.getText())
+                        , Integer.parseInt(spielfeldCol.getText()));
+
+                spielfeld.addSpieler(spieler1);
+                spielfeld.addSpieler(spieler2);
+
+                new SpielfeldView(new Spielfeld(Integer.parseInt(spielfeldRow.getText()),Integer.parseInt(spielfeldCol.getText())));
                 getFrame().dispose();
             }
         });
 
-        JPanel buttons = new JPanel(new GridLayout(1,2,15,15));
-        buttons.setMaximumSize(new Dimension(450,250));
+        JPanel buttons = new JPanel(new GridLayout(1, 2, 15, 15));
+        buttons.setMaximumSize(new Dimension(450, 250));
         buttons.setAlignmentX(0.425f);
 
 
@@ -105,14 +116,15 @@ public class KonfigurationsView extends JFrame {
         mittelPanel.add(buttons);
 
 
-
         this.add(mittelPanel);
 
 
         this.setVisible(true);
 
     }
-    public JFrame getFrame(){
+
+    public JFrame getFrame() {
         return this;
     }
+
 }

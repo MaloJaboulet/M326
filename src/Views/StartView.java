@@ -1,5 +1,8 @@
 package Views;
 
+import Model.Spielfeld;
+import SpielfeldKlassen.Spieler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +13,7 @@ public class StartView extends JFrame {
     private JButton spielen;
     private JButton spielkonfigurieren;
 
-    public StartView(){
+    public StartView() {
         this.setTitle("Memorygame");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -19,15 +22,15 @@ public class StartView extends JFrame {
         topPanel.setLayout(new BorderLayout());
 
 
-        JLabel titel = new JLabel("Memorygame",  SwingConstants.CENTER);
+        JLabel titel = new JLabel("Memorygame", SwingConstants.CENTER);
         titel.setFont(titel.getFont().deriveFont(32.0f));
-        topPanel.add(titel,BorderLayout.CENTER);
+        topPanel.add(titel, BorderLayout.CENTER);
 
-        JPanel mittelPanel = new JPanel(new GridLayout(1,2,15,15));
-        mittelPanel.setMaximumSize(new Dimension(500,300));
+        JPanel mittelPanel = new JPanel(new GridLayout(1, 2, 15, 15));
+        mittelPanel.setMaximumSize(new Dimension(500, 300));
 
         spielkonfigurieren = new JButton("Spielkonfigurieren");
-        spielkonfigurieren.setPreferredSize(new Dimension(50,50));
+        spielkonfigurieren.setPreferredSize(new Dimension(50, 50));
         spielkonfigurieren.addActionListener(new ButtonController());
 
         spielen = new JButton("Spielen");
@@ -43,7 +46,7 @@ public class StartView extends JFrame {
         this.setVisible(true);
     }
 
-    public JFrame getFrame(){
+    public JFrame getFrame() {
         return this;
     }
 
@@ -51,10 +54,10 @@ public class StartView extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == spielkonfigurieren){
+            if (e.getSource() == spielkonfigurieren) {
                 new KonfigurationsView();
-            }else {
-                new SpielfeldView(10, 10);
+            } else {
+                new SpielfeldView(new Spielfeld(10,10));
             }
             getFrame().dispose();
         }
