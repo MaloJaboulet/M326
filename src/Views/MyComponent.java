@@ -44,24 +44,6 @@ public class MyComponent extends JPanel implements MouseListener {
         myJLabel.setIcon(new ImageIcon(spiellogik.turnKarte(karte)));
 
 
-        /*Karte karte = model.getKarte(row, col);
-
-
-        button.setIcon(new ImageIcon(spiellogik.turnKarte(karte)));
-        int resultat = spiellogik.compareCard(karte);
-
-        System.out.println("Klick");
-        System.out.println("Spieler: " + spiellogik.getAktSpieler().getSpielerName());
-
-        if (resultat == 1) {
-            spiellogik.givePoints(spiellogik.getAktSpieler(), 1);
-            button.setEnabled(false);
-        } else if (resultat == -1) {
-            spiellogik.turnSpielerTurn();
-            button.setBackground(Color.blue);
-        }
-*/
-
     }
     @Override
     public void mousePressed(MouseEvent e) {
