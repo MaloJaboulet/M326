@@ -1,62 +1,91 @@
 package Views;
 
+import Model.Spielfeld;
 import SpielfeldKlassen.Karte;
+import SpielfeldKlassen.Spiellogik;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 
 
-public class SpielfeldView extends JFrame {
+public class SpielfeldView extends JFrame implements SpielfeldInterface {
     private Vector<Karte> karten;
     private Vector<ImageIcon> hintergrundBilder;
-    private JPanel spielfeld;
-    private AbstractTableModel model;
+    private MyComponent spielfeld;
+    private Spielfeld model;
+    private Spiellogik spiellogik;
 
 
-    public SpielfeldView(AbstractTableModel model) {
-        this.model = model;
+    public SpielfeldView(Spielfeld _model) {
+        this.model = _model;
+        spiellogik = new Spiellogik(model.getSpieler());
 
-        karten = new Vector<>();
-        hintergrundBilder = new Vector<>();
+        //karten = new Vector<>();
+        //hintergrundBilder = new Vector<>();
 
         this.setTitle("Spielfeld");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        spielfeld = new JPanel();
-        spielfeld.setLayout(new GridLayout(model.getRowCount(), model.getColumnCount(), 15, 15));
+        JPanel spielAngaben = new JPanel();
+        JLabel runde = new JLabel("Runde: ");
 
-
-
-        for (int i = 0; i < model.getRowCount(); i++) {
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                JButton button = new JButton();
-
-
-                //button.setIcon(new ImageIcon(this.getClass().getResource("1.jpg")));
-                button.setBackground(Color.green);
-
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JButton button = (JButton)e.getSource();
-                        System.out.println("Klick");
-                    }
-                });
-                spielfeld.add(button);
-            }
+        JPanel mittelPanel = new JPanel();
+        JLabel spieler1 = new JLabel();
+        /*if (model.getSpieler(0) != null && model.getSpieler(0).getSpielerName().equals("spieler1")) {
+            Spieler spieler = model.getSpielerMitNummer(1);
+            spieler1 = new JLabel("Spieler 1: "+String.valueOf(spieler.getPoints()));
+        }else {
+            Spieler spieler = model.getSpieler(0);
+            spieler1 = new JLabel(spieler.getSpielerName()+": "+String.valueOf(spieler.getPoints()));
         }
+
+        JLabel spieler2 = new JLabel();
+        if (model.getSpieler(1) != null && model.getSpieler(1).getSpielerName().equals("spieler2")) {
+            Spieler spieler = model.getSpielerMitNummer(2);
+            spieler2 = new JLabel("Spieler 2: "+String.valueOf(spieler.getPoints()));
+        }else {
+            Spieler spieler = model.getSpieler(1);
+            spieler2 = new JLabel(spieler.getSpielerName()+": "+String.valueOf(spieler.getPoints()));
+        }
+
+        mittelPanel.add(spieler1);
+        mittelPanel.add(spieler2);
+
+         */
+
+        spielAngaben.add(runde, BorderLayout.WEST);
+        spielAngaben.add(mittelPanel, BorderLayout.CENTER);
+
+
+
+
+
+        spielfeld = new MyComponent(model.getRows(),model.getColumns(), model);
+        spielfeld.setKarten(model.getRows(), model.getColumns(), model.getSpielfeld());
 
 
         JLabel titel = new JLabel("Memory Game");
 
         this.add(titel);
+        this.add(spielAngaben, BorderLayout.NORTH);
         this.add(spielfeld);
-
 
         this.setVisible(true);
     }
+
+    @Override
+    public void firePicChanged(int row, int col, Image pic) {
+        MyJLabel myJLabel = (MyJLabel) spielfeld.getComponentAt(row,col);
+        myJLabel.setIcon(new ImageIcon(pic));
+    }
+
+    @Override
+    public void firePicDisable(int row, int col) {
+        MyJLabel myJLabel = (MyJLabel) spielfeld.getComponentAt(row,col);
+        myJLabel.setEnabled(false);
+    }
+
+
 }
+

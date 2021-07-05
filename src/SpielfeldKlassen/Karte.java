@@ -2,11 +2,11 @@ package SpielfeldKlassen;
 
 import java.awt.*;
 
-public class Karte {
+public class Karte{
 
     private boolean isTurned;
     private Image background;
-    private final Color FOREGROUND = new Color(0, 158, 96);
+    private Image foreground;
     private boolean visible;
     private int id;
 
@@ -33,8 +33,12 @@ public class Karte {
         this.background = background;
     }
 
-    public Color getFOREGROUND() {
-        return FOREGROUND;
+    public Image getForeground() {
+        return foreground;
+    }
+
+    public void setForeground(Image image){
+        this.foreground = image;
     }
 
     public boolean isVisible() {

@@ -1,7 +1,6 @@
 package Model;
 
 import SpielfeldKlassen.RoundTimer;
-import SpielfeldKlassen.Spieler;
 
 import java.util.Vector;
 

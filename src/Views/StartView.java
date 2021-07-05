@@ -1,7 +1,6 @@
 package Views;
 
 import Model.Spielfeld;
-import SpielfeldKlassen.Spieler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +56,7 @@ public class StartView extends JFrame {
             if (e.getSource() == spielkonfigurieren) {
                 new KonfigurationsView();
             } else {
-                new SpielfeldView(new Spielfeld(10,10));
+                new SpielfeldView(new Spielfeld(10,10,"spieler1","spieler2"));
             }
             getFrame().dispose();
         }

@@ -38,6 +38,10 @@ public class Spieler {
         this.points = points;
     }
 
+    public void givePoint(int point){
+        setPoints(getPoints()+point);
+    }
+
     public boolean isYourTurn() {
         return yourTurn;
     }

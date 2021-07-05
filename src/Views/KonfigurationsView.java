@@ -39,8 +39,7 @@ public class KonfigurationsView extends JFrame {
         spielerNamen.add(spieler1Name);
         spielerNamen.add(spieler2Name);
 
-        Spieler spieler1 = new Spieler(spieler1Name.getText(), true);
-        Spieler spieler2 = new Spieler(spieler2Name.getText(), false);
+
 
 
         JPanel colRow = new JPanel();
@@ -73,10 +72,15 @@ public class KonfigurationsView extends JFrame {
                 Spielfeld spielfeld = new Spielfeld(Integer.parseInt(spielfeldRow.getText())
                         , Integer.parseInt(spielfeldCol.getText()));
 
+
+                Spieler spieler1 = new Spieler(spieler1Name.getText().replace("Name Spieler 1:",""), true);
+                Spieler spieler2 = new Spieler(spieler2Name.getText().replace("Name Spieler 2:",""), false);
+
+
                 spielfeld.addSpieler(spieler1);
                 spielfeld.addSpieler(spieler2);
 
-                new SpielfeldView(new Spielfeld(Integer.parseInt(spielfeldRow.getText()),Integer.parseInt(spielfeldCol.getText())));
+                new SpielfeldView(spielfeld);
                 getFrame().dispose();
             }
         });

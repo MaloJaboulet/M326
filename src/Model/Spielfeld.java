@@ -4,49 +4,62 @@ import SpielfeldKlassen.Karte;
 import SpielfeldKlassen.Spieler;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.Vector;
 
-public class Spielfeld extends AbstractTableModel {
+public class Spielfeld extends SpielfeldModel{
 
-    private Image[][] spielfeld;
+    private Karte[][] spielfeld;
     private int rows;
     private int columns;
-    private final Color BACKGROUND = Color.green;
     private Vector<Karte> karten;
-    private Vector<Spieler> spieler;
+    private Vector<Spieler> spielern;
     private Vector<String> bilder;
 
 
     public Spielfeld(int rows, int columns) {
-        spielfeld = new Image[rows][columns];
+        spielfeld = new Karte[rows][columns];
         karten = new Vector<>();
+        spielern = new Vector<>();
         setColumns(columns);
         setRows(rows);
         setBilder(createBilder(rows, columns));
-        createKarten(rows,columns);
-        fillSpielfeld(rows,columns);
+        createKarten(rows, columns);
+        fillSpielfeld(rows, columns);
+    }
+
+    public Spielfeld(int rows, int columns, String  spieler1Name, String  spieler2Name) {
+        spielfeld = new Karte[rows][columns];
+        karten = new Vector<>();
+        spielern = new Vector<>();
+        setColumns(columns);
+        setRows(rows);
+        setBilder(createBilder(rows, columns));
+        createKarten(rows, columns);
+        fillSpielfeld(rows, columns);
+        createSpieler(spieler1Name,spieler2Name);
 
     }
 
-    public Image[][] getSpielfeld() {
+    public Karte[][] getSpielfeld() {
         return spielfeld;
     }
 
-    public Image getKarteImSpielfeld(int rows, int columns){
+    public Karte getKarteImSpielfeld(int rows, int columns) {
         return spielfeld[rows][columns];
     }
 
-    public void fillSpielfeld(int rows, int columns){
+    public void fillSpielfeld(int rows, int columns) {
+        int zaehler = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                spielfeld[i][j] = karten.get((i*j)).getBackground();
+                spielfeld[i][j] = karten.get(zaehler);
+                zaehler++;
             }
         }
     }
 
-    public void setSpielfeld(Image[][] spielfeld) {
+    public void setSpielfeld(Karte[][] spielfeld) {
         this.spielfeld = spielfeld;
     }
 
@@ -66,19 +79,13 @@ public class Spielfeld extends AbstractTableModel {
         this.columns = columns;
     }
 
-    public Color getBACKGROUND() {
-        return BACKGROUND;
-    }
-
     public Vector<Karte> getKarten() {
         return karten;
     }
 
     public void createKarten(int row, int col) {
-        int zaehler = 1;
+        int zaehler = 0;
         for (int i = 0; i < (row * col); i++) {
-
-
             double randZahl;
 
             while (true) {
@@ -87,12 +94,15 @@ public class Spielfeld extends AbstractTableModel {
                     break;
                 }
             }
-            if (zaehler == 50) {
-                zaehler = 1;
+            if (zaehler == (row * col)/2) {
+                zaehler = 0;
             }
 
-            Karte karte = new Karte(new ImageIcon("./Img/"+getBilder().get(zaehler)).getImage(), false, i);
+            //Karte karte = new Karte(new ImageIcon("./Img/"+getBilder().get(zaehler)).getImage(), false, i);
+            Karte karte = new Karte(new ImageIcon(this.getClass().getResource("../Img/"+(zaehler+1)+".jpg")).getImage(), false, i);
+            karte.setForeground(new ImageIcon(this.getClass().getResource("../Img/foreground.jpg")).getImage());
             addKarte(karte);
+            zaehler++;
         }
     }
 
@@ -115,6 +125,12 @@ public class Spielfeld extends AbstractTableModel {
         return bilder;
     }
 
+    @Override
+    public Image getBild(Karte karte) {
+        return karte.getBackground();
+    }
+
+
     public void addKarte(Karte karte) {
         karten.add(karte);
     }
@@ -124,23 +140,25 @@ public class Spielfeld extends AbstractTableModel {
     }
 
     public Vector<Spieler> getSpieler() {
-        return spieler;
+        return spielern;
     }
 
     public void addSpieler(Spieler spieler) {
-        this.spieler.add(spieler);
+        this.spielern.add(spieler);
     }
 
     public void setSpieler(Vector<Spieler> spieler) {
-        this.spieler = spieler;
+        this.spielern = spieler;
     }
 
-    public void giveTurn() {
-
-    }
-
-    public void endGame() {
-
+    public void createSpieler(String name1, String name2){
+            if (name2 != null){
+                addSpieler(new Spieler(name1, true));
+                addSpieler( new Spieler(name2,false));
+            }else {
+                Spieler spieler1 = new Spieler(name1,true);
+                addSpieler(spieler1);
+        }
     }
 
     public boolean compareCards(Karte karte1, Karte karte2) {
@@ -148,17 +166,35 @@ public class Spielfeld extends AbstractTableModel {
     }
 
     @Override
-    public int getRowCount() {
-        return getRows();
+    public Karte getKarte(int rowIndex, int colIndex) {
+        return spielfeld[rowIndex][colIndex];
     }
 
     @Override
-    public int getColumnCount() {
-        return getColumns();
+    public Spieler getSpieler(String spielerName) {
+        for (Spieler spieler : spielern) {
+            if (spieler.getSpielerName() == spielerName) {
+                return spieler;
+            }
+        }
+        return null;
     }
 
     @Override
-    public Image getValueAt(int rowIndex, int columnIndex) {
-        return getKarteImSpielfeld(rowIndex, columnIndex);
+    public Spieler getSpielerMitNummer(int spielerNummer) {
+        for (Spieler spieler : spielern) {
+            if (spieler.getSpielerName().contains(Integer.toString(spielerNummer))) {
+                return spieler;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Spieler getSpieler(int index) {
+        if (index < spielern.size()){
+            return spielern.get(index);
+        }
+        return null;
     }
 }
