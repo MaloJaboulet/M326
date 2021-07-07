@@ -27,8 +27,12 @@ public class StartView extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        JPanel grossesPanel = new JPanel(new BorderLayout());
+        grossesPanel.setBackground(new Color(52, 155, 235));
+
         //Das Top-Panel
         JPanel topPanel = new JPanel();
+        topPanel.setOpaque(false);
         topPanel.setLayout(new BorderLayout());
 
         //Der Titel
@@ -39,6 +43,7 @@ public class StartView extends JFrame {
         //Panel mit den Buttons
         JPanel mittelPanel = new JPanel(new GridLayout(1, 2, 15, 15));
         mittelPanel.setMaximumSize(new Dimension(500, 300));
+        mittelPanel.setOpaque(false);
 
         spielkonfigurieren = new JButton("Spielkonfigurieren");
         spielkonfigurieren.setPreferredSize(new Dimension(50, 50));
@@ -50,8 +55,9 @@ public class StartView extends JFrame {
         mittelPanel.add(spielkonfigurieren);
         mittelPanel.add(spielen);
 
-        this.add(topPanel, BorderLayout.NORTH);
-        this.add(mittelPanel, BorderLayout.SOUTH);
+        grossesPanel.add(topPanel,BorderLayout.NORTH);
+        grossesPanel.add(mittelPanel,BorderLayout.SOUTH);
+        this.add(grossesPanel);
 
 
         this.setVisible(true);

@@ -38,6 +38,7 @@ public class KonfigurationsView extends JFrame {
         //Das Panel mit all den Komponenten
         JPanel mittelPanel = new JPanel();
         mittelPanel.setLayout(new BoxLayout(mittelPanel, BoxLayout.Y_AXIS));
+        mittelPanel.setBackground(new Color(52, 155, 235));
 
         //Die Auswahl zwischen Singleplayer und Muliplayer
         JComboBox anzahlSpieler = new JComboBox(spielerAnzahl);
