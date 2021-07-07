@@ -8,23 +8,39 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author Malo Jaboulet
+ * @version 1.0
+ * @since 07.07.2021
+ * <p>
+ * Das ist das Auswertungsgui des Spieles.
+ * Hier werden der Gewinner und Verlierer angezeigt und dem Benutzer die Möglichkeit gegeben nochmals zu spielen oder etwas anderes zu machen.
+ */
 public class AuswertungsGui extends JFrame {
 
-    public AuswertungsGui(Playground playground){
+    /**
+     * Der Konstruktor des GUIs, wo das GUI erstellt wird.
+     *
+     * @param playground die Datensammlung des Spielfelds
+     */
+    public AuswertungsGui(Playground playground) {
+        playground.setWinner(playground.winner()); //Setzt den Gewinner
+
         this.setTitle("Auswertungsgui");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        //Das Hauptpanel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3,1,0,200));
+        panel.setLayout(new GridLayout(3, 1, 0, 200));
+        panel.setBackground(new Color(113, 139, 245));
 
-        JPanel auswertungsTabelle = new JPanel(new GridLayout(1,2,250,0));
+        // Die Tabelle mit dem Gewinner und Verlierer
+        JPanel auswertungsTabelle = new JPanel(new GridLayout(1, 2, 250, 0));
         auswertungsTabelle.setOpaque(false);
 
-
-        panel.setBackground(new Color(113,139,245));
-
+        //Der Titel
         JLabel titel = new JLabel("Auswertung des Memory Game");
-        titel.setFont(new Font("Arial",Font.BOLD,30));
+        titel.setFont(new Font("Arial", Font.BOLD, 30));
 
         JPanel titelPanel = new JPanel();
         titelPanel.setOpaque(false);
@@ -32,23 +48,23 @@ public class AuswertungsGui extends JFrame {
 
 
         //Das Gewinnerpanel
-
         JPanel gewinnerPanel = new JPanel();
-        gewinnerPanel.setLayout(new GridLayout(3,1));
+        gewinnerPanel.setLayout(new GridLayout(3, 1));
 
-
-        JPanel panelTemp = new JPanel(new GridLayout(1,2));
+        //Panel mit dem Gewinnername
+        JPanel panelTemp = new JPanel(new GridLayout(1, 2));
         JLabel winnerLabel = new JLabel("Gewinner");
         JLabel gewinnerName = new JLabel(playground.winner().getName());
 
         panelTemp.add(winnerLabel);
         panelTemp.add(gewinnerName);
         panelTemp.setBackground(Color.green);
-        panelTemp.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        panelTemp.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
-        JPanel punkteGewinnerPanel = new JPanel(new GridLayout(1,2));
+        //Panel mit den Punkten
+        JPanel punkteGewinnerPanel = new JPanel(new GridLayout(1, 2));
         punkteGewinnerPanel.setBackground(Color.cyan);
-        punkteGewinnerPanel.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        punkteGewinnerPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
         JLabel gewinnerPunkte = new JLabel(String.valueOf(playground.winner().getScore()));
         JLabel gewinnerPunkteText = new JLabel("Punkte");
@@ -56,12 +72,12 @@ public class AuswertungsGui extends JFrame {
         punkteGewinnerPanel.add(gewinnerPunkteText);
         punkteGewinnerPanel.add(gewinnerPunkte);
 
-
-        JPanel rundenGewinnerPanel = new JPanel(new GridLayout(1,2));
+        //Panel mit den Anzahl gewonnenen Runden
+        JPanel rundenGewinnerPanel = new JPanel(new GridLayout(1, 2));
         rundenGewinnerPanel.setBackground(Color.cyan);
-        rundenGewinnerPanel.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        rundenGewinnerPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
-        JLabel gewinnerRunden = new JLabel("1");
+        JLabel gewinnerRunden = new JLabel(String.valueOf(playground.winner().getRoundsWon()));
         JLabel gewinnerRundenText = new JLabel("Runden");
 
         rundenGewinnerPanel.add(gewinnerRundenText);
@@ -74,23 +90,23 @@ public class AuswertungsGui extends JFrame {
 
 
         //Das Verliererpanel
-
         JPanel verliererPanel = new JPanel();
-        verliererPanel.setLayout(new GridLayout(3,1));
+        verliererPanel.setLayout(new GridLayout(3, 1));
 
-
-        JPanel verliererNamePanel = new JPanel(new GridLayout(1,2));
-        JLabel verliererLabel = new JLabel("Gewinner");
+        //Panel mit dem Verlierername
+        JPanel verliererNamePanel = new JPanel(new GridLayout(1, 2));
+        JLabel verliererLabel = new JLabel("Verlierer");
         JLabel verliererName = new JLabel(playground.loser().getName());
 
         verliererNamePanel.add(verliererLabel);
         verliererNamePanel.add(verliererName);
         verliererNamePanel.setBackground(Color.red);
-        verliererNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        verliererNamePanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
-        JPanel punkteVerliererPanel = new JPanel(new GridLayout(1,2));
+        //Panel mit den Punkten
+        JPanel punkteVerliererPanel = new JPanel(new GridLayout(1, 2));
         punkteVerliererPanel.setBackground(Color.cyan);
-        punkteVerliererPanel.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        punkteVerliererPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
         JLabel verliererPunkte = new JLabel(String.valueOf(playground.loser().getScore()));
         JLabel verliererPunkteText = new JLabel("Punkte");
@@ -98,12 +114,12 @@ public class AuswertungsGui extends JFrame {
         punkteVerliererPanel.add(verliererPunkteText);
         punkteVerliererPanel.add(verliererPunkte);
 
-
-        JPanel rundenVerliererPanel = new JPanel(new GridLayout(1,2));
+        //Panel mit den gewonnen Runden
+        JPanel rundenVerliererPanel = new JPanel(new GridLayout(1, 2));
         rundenVerliererPanel.setBackground(Color.cyan);
-        rundenVerliererPanel.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        rundenVerliererPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
-        JLabel verliererRunden = new JLabel("0");
+        JLabel verliererRunden = new JLabel(String.valueOf(playground.loser().getRoundsWon()));
         JLabel verliererRundenText = new JLabel("Runden");
 
         rundenVerliererPanel.add(verliererRundenText);
@@ -117,12 +133,12 @@ public class AuswertungsGui extends JFrame {
         auswertungsTabelle.add(gewinnerPanel);
         auswertungsTabelle.add(verliererPanel);
 
-        auswertungsTabelle.setBorder(new EmptyBorder(0,200,0,200));
+        auswertungsTabelle.setBorder(new EmptyBorder(0, 200, 0, 200));
 
 
         //Buttons
+        JPanel buttons = new JPanel(new GridLayout(1, 4));
 
-        JPanel buttons = new JPanel(new GridLayout(1,4));
         JButton beenden = new JButton("Beenden");
         beenden.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         beenden.addActionListener(new ActionListener() {
@@ -156,6 +172,7 @@ public class AuswertungsGui extends JFrame {
         nochmalsSpielen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                playground.restoreData();
                 new PlaygroundGui(playground);
                 getFrame().dispose();
             }
@@ -171,13 +188,12 @@ public class AuswertungsGui extends JFrame {
         panel.add(buttons);
 
 
-
-        this.add(panel,BorderLayout.CENTER);
-        this.getContentPane().setBackground(new Color(113,139,245));
+        this.add(panel, BorderLayout.CENTER);
+        this.getContentPane().setBackground(new Color(113, 139, 245));
         this.setVisible(true);
     }
 
-    public JFrame getFrame(){
+    public JFrame getFrame() {
         return this;
     }
 }

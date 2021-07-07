@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Malo Jaboulet
+ * @since 07.07.2021
+ * @version 1.0
+ */
 public class PlaygroundGui extends JFrame implements PlaygroundListener {
 
     private Playground playground;
@@ -34,11 +39,12 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
         this.setTitle("Spielfeld");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        JPanel spielAngaben = new JPanel();
-        JLabel runde = new JLabel("Runde: ");
+        JPanel spielAngaben = new JPanel(new GridLayout(1,3,200,0));
+        JLabel runde = new JLabel("Runde: "+playground.getRoundsPlayed());
 
         JPanel mittelPanel = new JPanel();
 
+        //Spielernamen
         if (playground.getLogic().getPlayer(0) != null && playground.getLogic().getPlayer(0).getName().equals("spieler1")) {
             player1 = new PlayerComponent();
             player1.setText("Spieler 1: " + playground.getLogic().getPlayer(0).getScore());
@@ -62,9 +68,14 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
         mittelPanel.add(player1);
         mittelPanel.add(player2);
 
+        JLabel timer = new JLabel("Timer");
+        timer.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        spielAngaben.add(runde, BorderLayout.WEST);
-        spielAngaben.add(mittelPanel, BorderLayout.CENTER);
+
+
+        spielAngaben.add(runde);
+        spielAngaben.add(mittelPanel);
+        spielAngaben.add(timer);
 
 
         spielfeld = new JPanel();
@@ -73,9 +84,58 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
 
         JLabel titel = new JLabel("Memory Game");
 
+
+        //Buttons
+
+        JPanel buttons = new JPanel(new GridLayout(1,4));
+        JButton beenden = new JButton("Beenden");
+        beenden.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+        beenden.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getFrame().dispose();
+            }
+        });
+
+        JButton haupmenu = new JButton("Hauptmenü");
+        haupmenu.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+        haupmenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new StartView();
+                getFrame().dispose();
+            }
+        });
+
+        JButton speichern = new JButton("Speichern");
+        speichern.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+        speichern.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Speichern");
+            }
+        });
+
+        JButton nochmalsSpielen = new JButton("Nochmals spielen");
+        nochmalsSpielen.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+        nochmalsSpielen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playground.restoreData();
+                new PlaygroundGui(playground);
+                getFrame().dispose();
+            }
+        });
+
+        buttons.add(beenden);
+        buttons.add(haupmenu);
+        buttons.add(speichern);
+        buttons.add(nochmalsSpielen);
+
         this.add(titel);
         this.add(spielAngaben, BorderLayout.NORTH);
         this.add(spielfeld);
+        this.add(buttons, BorderLayout.SOUTH);
 
         this.setVisible(true);
     }

@@ -3,7 +3,11 @@ package gui;
 import data.Player;
 
 import java.awt.*;
-
+/**
+ * @author Malo Jaboulet
+ * @since 07.07.2021
+ * @version 1.0
+ */
 public interface PlaygroundModel {
 
     public int getRows();

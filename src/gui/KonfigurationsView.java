@@ -7,10 +7,13 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 
+/**
+ * @author Malo Jaboulet
+ * @since 07.07.2021
+ * @version 1.0
+ */
 public class KonfigurationsView extends JFrame {
 
     private JTextField spieler1Name;
@@ -33,8 +36,8 @@ public class KonfigurationsView extends JFrame {
         anzahlSpieler.setSelectedIndex(0);
 
         JPanel spielerNamen = new JPanel(new GridLayout(1, 2, 20, 20));
-        spieler1Name = new JTextField("Name Spieler 1:");
-        spieler2Name = new JTextField("Name Spieler 2:");
+        spieler1Name = new JTextField("Name Spieler 1: ");
+        spieler2Name = new JTextField("Name Spieler 2: ");
 
         spielerNamen.add(spieler1Name);
         spielerNamen.add(spieler2Name);
@@ -82,8 +85,22 @@ public class KonfigurationsView extends JFrame {
                 Playground playground = new Playground(Integer.parseInt(spielfeldRow.getText()),
                         Integer.parseInt(spielfeldCol.getText()));
 
-                playground.getLogic().addNewPlayer(spieler1Name.getText().replace("Name Spieler 1:", ""), true);
-                playground.getLogic().addNewPlayer(spieler2Name.getText().replace("Name Spieler 2:", ""), false);
+                String name1;
+                if(spieler1Name.getText().equals("Name Spieler 1: ")){
+                    name1 = "Spieler 1";
+                }else {
+                    name1 = spieler1Name.getText().replace("Name Spieler 1 :", "");
+                }
+                String name2;
+                if(spieler2Name.getText().equals("Name Spieler 2: ")){
+                    name2 = "Spieler 2";
+                }else {
+                    name2 = spieler2Name.getText().replace("Name Spieler 2 :", "");
+                }
+
+
+                playground.getLogic().addNewPlayer(name1, true);
+                playground.getLogic().addNewPlayer(name2, false);
 
                 PlaygroundGui playgroundGui = new PlaygroundGui(playground);
 

@@ -6,7 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * @author Malo Jaboulet
+ * @since 07.07.2021
+ * @version 1.0
+ */
 public class StartView extends JFrame {
 
     private JButton spielen;

@@ -2,6 +2,11 @@ package gui;
 
 import data.Playground;
 
+/**
+ * @author Malo Jaboulet
+ * @since 07.07.2021
+ * @version 1.0
+ */
 public class PlaygroundController {
 
     private Playground playground;
