@@ -1,6 +1,7 @@
 package Testfaelle;
 
 import data.Player;
+import data.Playground;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -10,6 +11,7 @@ import static org.junit.Assert.*;
  */
 public class PlayerTest {
     private static Player player;
+    private static Playground playground;
 
     /**
      * Erstellt einen Spieler.
@@ -17,6 +19,7 @@ public class PlayerTest {
     @Before
     public void setUp(){
         player = new Player("Test",0,true);
+        playground = new Playground(10,10);
     }
 
     /**
@@ -38,5 +41,15 @@ public class PlayerTest {
         player.changeTurn();
 
         assertEquals(false, player.getYourTurn());
+    }
+
+    @Test
+    public void drawOnPoints(){
+        playground.getLogic().addNewPlayer("Hans",true);
+        playground.getLogic().addNewPlayer("Meier",false);
+
+        Player gewinner = playground.winner();
+
+        assertEquals(null, gewinner);
     }
 }
