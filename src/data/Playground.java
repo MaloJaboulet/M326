@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collections;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class Playground implements gui.PlaygroundModel {
     private PlayCard[][] cards;
@@ -135,21 +136,24 @@ public class Playground implements gui.PlaygroundModel {
     }
 
     @Override
-    public void compareCards(int x1, int y1, int x2, int y2) {
-        PlayCard card1 = getCard(x1,y1);
-        PlayCard card2 = getCard(x2,y2);
-        if (isSelected(x1, y2) && isSelected(x2, y2)) {
-            if (getCard(x1, y2).getAnzeige() == getCard(x2, y2).getAnzeige()) {
-                card1.setVisible(false);
-                card2.setVisible(false);
+    public int compareCards(int x1, int y1, int x2, int y2) {
+        PlayCard card1 = getCard(x1, y1);
+        PlayCard card2 = getCard(x2, y2);
+        if (card1.getBackground().equals(card2.getBackground())) {
+            card1.setVisible(false);
+            card2.setVisible(false);
+            playgroundListener.firePairFound(x1, y1, x2, y2);
+            return 1;
+        } else {
+            card1.setAnzeige(card1.getForeground());
+            card1.setTurned(false);
+            playgroundListener.fireCardChange(x1, y1);
 
-                playgroundListener.firePairFound(x1,y1,x2,y2);
-            }else {
-                card1.setAnzeige(card1.getForeground());
-                playgroundListener.fireCardChange(x1,y1);
-                card2.setAnzeige(card2.getForeground());
-                playgroundListener.fireCardChange(x2,y2);
-            }
+            card2.setAnzeige(card2.getForeground());
+            card2.setTurned(false);
+            playgroundListener.fireCardChange(x2, y2);
+            return 0;
         }
     }
+
 }

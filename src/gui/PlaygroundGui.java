@@ -89,6 +89,7 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
         Image image = playground.getCard(x, y).getAnzeige();
 
         button.setIcon(new ImageIcon(image));
+
     }
 
     @Override
@@ -97,7 +98,7 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
         button.setEnabled(false);
 
         JButton button2 = buttons[x2][y2];
-        button.setEnabled(false);
+        button2.setEnabled(false);
 
     }
 
@@ -128,11 +129,18 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
 
             for (Map.Entry<JButton, String> entry : referenzen.entrySet()) {
                 if (entry.getKey() == button) {
-                    playgroundController.flipCard(Character.getNumericValue(entry.getValue().charAt(0)),
-                            Character.getNumericValue(entry.getValue().charAt(1)));
+                    if (playgroundController.flipCard(Character.getNumericValue(entry.getValue().charAt(0)),
+                            Character.getNumericValue(entry.getValue().charAt(1)))){
+                        new AuswertungsGui();
+                        getFrame().dispose();
+                    }
                     break;
                 }
             }
         }
+    }
+
+    public JFrame getFrame(){
+        return this;
     }
 }
