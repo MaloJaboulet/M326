@@ -55,9 +55,10 @@ public class Playground implements gui.PlaygroundModel {
             for (int j = 0; j < cols; j++) {
 
                 //Das Hintergrundbild wird aus dem Ordner "Img" gehold und in die Karte getan.
-                PlayCard card = new PlayCard(new ImageIcon(
-                        this.getClass().getResource("../Img/" + (images.get(zaehler)))).getImage()
-                        , false, (i * j));
+                Image image = new ImageIcon(this.getClass().getResource("../Img/"+(images.get(zaehler))))
+                        .getImage();
+                PlayCard card = new PlayCard(image, false, (i * j));
+
                 //Das Vordergrundbild wird aus dem Ordner "Img" gehold und in die Karte getan.
                 card.setForeground(new ImageIcon(
                         this.getClass().getResource("../Img/foreground.jpg")).getImage());

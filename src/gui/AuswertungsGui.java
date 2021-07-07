@@ -25,6 +25,7 @@ public class AuswertungsGui extends JFrame {
      */
     public AuswertungsGui(Playground playground) {
         playground.setWinner(playground.winner()); //Setzt den Gewinner
+        Color hintergrundFarbe = new Color(52, 155, 235);
 
         this.setTitle("Auswertungsgui");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -63,7 +64,7 @@ public class AuswertungsGui extends JFrame {
 
         //Panel mit den Punkten
         JPanel punkteGewinnerPanel = new JPanel(new GridLayout(1, 2));
-        punkteGewinnerPanel.setBackground(Color.cyan);
+        punkteGewinnerPanel.setBackground(hintergrundFarbe);
         punkteGewinnerPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
         JLabel gewinnerPunkte = new JLabel(String.valueOf(playground.winner().getScore()));
@@ -74,7 +75,7 @@ public class AuswertungsGui extends JFrame {
 
         //Panel mit den Anzahl gewonnenen Runden
         JPanel rundenGewinnerPanel = new JPanel(new GridLayout(1, 2));
-        rundenGewinnerPanel.setBackground(Color.cyan);
+        rundenGewinnerPanel.setBackground(hintergrundFarbe);
         rundenGewinnerPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
         JLabel gewinnerRunden = new JLabel(String.valueOf(playground.winner().getRoundsWon()));
@@ -105,7 +106,7 @@ public class AuswertungsGui extends JFrame {
 
         //Panel mit den Punkten
         JPanel punkteVerliererPanel = new JPanel(new GridLayout(1, 2));
-        punkteVerliererPanel.setBackground(Color.cyan);
+        punkteVerliererPanel.setBackground(hintergrundFarbe);
         punkteVerliererPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
         JLabel verliererPunkte = new JLabel(String.valueOf(playground.loser().getScore()));
@@ -116,7 +117,7 @@ public class AuswertungsGui extends JFrame {
 
         //Panel mit den gewonnen Runden
         JPanel rundenVerliererPanel = new JPanel(new GridLayout(1, 2));
-        rundenVerliererPanel.setBackground(Color.cyan);
+        rundenVerliererPanel.setBackground(hintergrundFarbe);
         rundenVerliererPanel.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
         JLabel verliererRunden = new JLabel(String.valueOf(playground.loser().getRoundsWon()));
@@ -142,6 +143,11 @@ public class AuswertungsGui extends JFrame {
         JButton beenden = new JButton("Beenden");
         beenden.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         beenden.addActionListener(new ActionListener() {
+            /**
+             * Wenn der Button gedrückt wird, wird das Programm geschlossen.
+             *
+             * @param e das Event
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 getFrame().dispose();
@@ -151,6 +157,11 @@ public class AuswertungsGui extends JFrame {
         JButton haupmenu = new JButton("Hauptmenü");
         haupmenu.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         haupmenu.addActionListener(new ActionListener() {
+            /**
+             * Wenn der Button gedrückt wird, wird der Benutzer zum Haupmenü geführt.
+             *
+             * @param e das Event
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 new StartView();
@@ -161,6 +172,11 @@ public class AuswertungsGui extends JFrame {
         JButton speichern = new JButton("Speichern");
         speichern.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         speichern.addActionListener(new ActionListener() {
+            /**
+             * Speichert den Spielstand des Spiels.
+             *
+             * @param e das Event
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Speichern");
@@ -170,6 +186,11 @@ public class AuswertungsGui extends JFrame {
         JButton nochmalsSpielen = new JButton("Nochmals spielen");
         nochmalsSpielen.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         nochmalsSpielen.addActionListener(new ActionListener() {
+            /**
+             * Wenn der Button gedrückt wird, wird das Spielfeld neu erstellt und es wird nochmals gespielt.
+             *
+             * @param e das Event
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 playground.restoreData();
@@ -193,6 +214,11 @@ public class AuswertungsGui extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Holt das JFrame.
+     *
+     * @return das JFrame
+     */
     public JFrame getFrame() {
         return this;
     }
