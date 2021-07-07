@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collections;
 import java.util.Vector;
-import java.util.concurrent.TimeUnit;
 
 public class Playground implements gui.PlaygroundModel {
     private PlayCard[][] cards;
@@ -101,6 +100,28 @@ public class Playground implements gui.PlaygroundModel {
         this.playgroundListener = playgroundListener;
     }
 
+    public Player getCurrentPlayer(){
+            if (getLogic().getPlayer(0).getYourTurn()){
+                return getLogic().getPlayer(0);
+            }else {
+                return getLogic().getPlayer(1);
+            }
+    }
+
+    public void turnCurrentPlayer(){
+        if (getLogic().getPlayer(0).getYourTurn()){
+            getLogic().getPlayer(0).setYourTurn(false);
+        }else {
+            getLogic().getPlayer(0).setYourTurn(true);
+        }
+
+        if (getLogic().getPlayer(1).getYourTurn()){
+            getLogic().getPlayer(1).setYourTurn(false);
+        }else {
+            getLogic().getPlayer(1).setYourTurn(true);
+        }
+    }
+
     @Override
     public int getRows() {
         return rows;
@@ -143,16 +164,38 @@ public class Playground implements gui.PlaygroundModel {
             card1.setVisible(false);
             card2.setVisible(false);
             playgroundListener.firePairFound(x1, y1, x2, y2);
+            getLogic().fireScoreChanged(getCurrentPlayer(), 1);
+
             return 1;
         } else {
             card1.setAnzeige(card1.getForeground());
             card1.setTurned(false);
             playgroundListener.fireCardChange(x1, y1);
 
+
             card2.setAnzeige(card2.getForeground());
             card2.setTurned(false);
             playgroundListener.fireCardChange(x2, y2);
+            turnCurrentPlayer();
             return 0;
+        }
+    }
+
+    @Override
+    public Player winner() {
+        if (logic.getPlayer(0).getScore() > logic.getPlayer(1).getScore()){
+            return logic.getPlayer(0);
+        }else {
+            return logic.getPlayer(1);
+        }
+    }
+
+    @Override
+    public Player loser() {
+        if (logic.getPlayer(0).getScore() < logic.getPlayer(1).getScore()){
+            return logic.getPlayer(0);
+        }else {
+            return logic.getPlayer(1);
         }
     }
 

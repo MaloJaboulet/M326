@@ -1,5 +1,6 @@
 package gui;
 
+import data.Player;
 import data.Playground;
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
     private HashMap<JButton, String> referenzen;
     private JButton[][] buttons;
     private JPanel spielfeld;
+    private PlayerComponent player1;
+    private PlayerComponent player2;
 
     public PlaygroundGui(Playground _playground) {
         this.playground = _playground;
@@ -35,39 +38,38 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
         JLabel runde = new JLabel("Runde: ");
 
         JPanel mittelPanel = new JPanel();
-        JLabel spieler1 = new JLabel();
-        /*if (model.getSpieler(0) != null && model.getSpieler(0).getSpielerName().equals("spieler1")) {
-            Spieler spieler = model.getSpielerMitNummer(1);
-            spieler1 = new JLabel("Spieler 1: "+String.valueOf(spieler.getPoints()));
-        }else {
-            Spieler spieler = model.getSpieler(0);
-            spieler1 = new JLabel(spieler.getSpielerName()+": "+String.valueOf(spieler.getPoints()));
+
+        if (playground.getLogic().getPlayer(0) != null && playground.getLogic().getPlayer(0).getName().equals("spieler1")) {
+            player1 = new PlayerComponent();
+            player1.setText("Spieler 1: " + playground.getLogic().getPlayer(0).getScore());
+        } else {
+            Player player = playground.getLogic().getPlayer(0);
+            player1 = new PlayerComponent();
+            player1.setText(player.getName() + ": " + player.getScore());
         }
 
-        JLabel spieler2 = new JLabel();
-        if (model.getSpieler(1) != null && model.getSpieler(1).getSpielerName().equals("spieler2")) {
-            Spieler spieler = model.getSpielerMitNummer(2);
-            spieler2 = new JLabel("Spieler 2: "+String.valueOf(spieler.getPoints()));
-        }else {
-            Spieler spieler = model.getSpieler(1);
-            spieler2 = new JLabel(spieler.getSpielerName()+": "+String.valueOf(spieler.getPoints()));
+        Player player;
+        if (playground.getLogic().getPlayer(1) != null && playground.getLogic().getPlayer(1).getName().equals("spieler2")) {
+            player = playground.getLogic().getPlayer(1);
+            player2 = new PlayerComponent();
+            player2.setText("Spieler 2: " + String.valueOf(player.getScore()));
+        } else {
+            player = playground.getLogic().getPlayer(1);
+            player2 = new PlayerComponent();
+            player2.setText(player.getName() + ": " + String.valueOf(player.getScore()));
         }
 
-        mittelPanel.add(spieler1);
-        mittelPanel.add(spieler2);
+        mittelPanel.add(player1);
+        mittelPanel.add(player2);
 
-         */
 
         spielAngaben.add(runde, BorderLayout.WEST);
         spielAngaben.add(mittelPanel, BorderLayout.CENTER);
 
 
         spielfeld = new JPanel();
-
         spielfeld.setLayout(new GridLayout(playground.getRows(), playground.getColumns(), 10, 10));
         spielfeld = fillCards(playground, spielfeld);
-        //spielfeld.setKarten(model.getRows(), model.getColumns(), model.getSpielfeld());
-
 
         JLabel titel = new JLabel("Memory Game");
 
@@ -130,17 +132,24 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
             for (Map.Entry<JButton, String> entry : referenzen.entrySet()) {
                 if (entry.getKey() == button) {
                     if (playgroundController.flipCard(Character.getNumericValue(entry.getValue().charAt(0)),
-                            Character.getNumericValue(entry.getValue().charAt(1)))){
-                        new AuswertungsGui();
+                            Character.getNumericValue(entry.getValue().charAt(1)))) {
+                        new AuswertungsGui(playground);
                         getFrame().dispose();
                     }
                     break;
                 }
             }
+            String player1Name = playground.getLogic().getPlayer(0).getName();
+            String player2Name = playground.getLogic().getPlayer(1).getName();
+
+            String player1Score = String.valueOf(playground.getLogic().getPlayer(0).getScore());
+            String player2Score = String.valueOf(playground.getLogic().getPlayer(1).getScore());
+            player1.setText(player1Name+": "+player1Score);
+            player2.setText(player2Name+": "+player2Score);
         }
     }
 
-    public JFrame getFrame(){
+    public JFrame getFrame() {
         return this;
     }
 }

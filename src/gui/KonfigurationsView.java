@@ -7,6 +7,8 @@ import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 
 public class KonfigurationsView extends JFrame {
@@ -49,13 +51,18 @@ public class KonfigurationsView extends JFrame {
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);
 
+
+
         JLabel spielfeld = new JLabel("Geben Sie die Spielfeldgrösse ein: (5x5 bis 10x10)");
 
 
         JTextField spielfeldRow = new JFormattedTextField(formatter);
         spielfeldRow.setText("Anzahl Zeilen");
+
         JTextField spielfeldCol = new JFormattedTextField(formatter);
         spielfeldCol.setText("Anzahl Spalten");
+
+
 
         colRow.add(spielfeldRow);
         colRow.add(spielfeldCol);
@@ -65,6 +72,13 @@ public class KonfigurationsView extends JFrame {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (spielfeldRow.getText().equals("")){
+                    spielfeldRow.setText("5");
+                }
+                if (spielfeldCol.getText().equals("")){
+                    spielfeldCol.setText("5");
+                }
+
                 Playground playground = new Playground(Integer.parseInt(spielfeldRow.getText()),
                         Integer.parseInt(spielfeldCol.getText()));
 
@@ -73,13 +87,14 @@ public class KonfigurationsView extends JFrame {
 
                 PlaygroundGui playgroundGui = new PlaygroundGui(playground);
 
+               // new AuswertungsGui(playground);
                 getFrame().dispose();
             }
         });
 
         JPanel buttons = new JPanel(new GridLayout(1, 2, 15, 15));
         buttons.setMaximumSize(new Dimension(450, 250));
-        buttons.setAlignmentX(0.425f);
+
 
 
         JButton verlassen = new JButton("Verlassen");
@@ -102,6 +117,7 @@ public class KonfigurationsView extends JFrame {
 
         buttons.add(verlassen);
         buttons.add(beenden);
+
 
         mittelPanel.add(titel);
         mittelPanel.add(anzahlSpieler);

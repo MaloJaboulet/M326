@@ -56,7 +56,10 @@ public class StartView extends JFrame {
             if (e.getSource() == spielkonfigurieren) {
                 new KonfigurationsView();
             } else {
-                new PlaygroundGui(new Playground(10,10));
+                Playground playground = new Playground(10,10);
+                playground.getLogic().addNewPlayer("Spieler 1", true);
+                playground.getLogic().addNewPlayer("Spieler 2",false);
+                new PlaygroundGui(playground);
             }
             getFrame().dispose();
         }
