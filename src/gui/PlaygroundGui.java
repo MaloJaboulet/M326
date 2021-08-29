@@ -71,7 +71,8 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
         mittelPanel.add(player2);
 
         //Timer
-        JLabel timer = new JLabel("Timer");
+        //JLabel timer = new JLabel("Timer");
+        JLabel timer = new JLabel("");
         timer.setHorizontalAlignment(SwingConstants.RIGHT);
 
 
@@ -118,7 +119,7 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
             }
         });
 
-        JButton speichern = new JButton("Speichern");
+        /*JButton speichern = new JButton("Speichern");
         speichern.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         speichern.addActionListener(new ActionListener() {
             /**
@@ -126,11 +127,11 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
              *
              * @param e das Event
              */
-            @Override
+           /* @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Speichern");
             }
-        });
+        });*/
 
         JButton nochmalsSpielen = new JButton("Nochmals spielen");
         nochmalsSpielen.setBorder(BorderFactory.createLineBorder(Color.black, 3));
@@ -150,7 +151,7 @@ public class PlaygroundGui extends JFrame implements PlaygroundListener {
 
         buttons.add(beenden);
         buttons.add(haupmenu);
-        buttons.add(speichern);
+        //buttons.add(speichern);
         buttons.add(nochmalsSpielen);
 
         this.add(spielAngaben, BorderLayout.NORTH);

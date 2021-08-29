@@ -158,6 +158,7 @@ public class Playground implements gui.PlaygroundModel {
                 card.setAnzeige(card.getForeground());
             }
         }
+        createCards(getRows(),getColumns());
     }
 
     /**

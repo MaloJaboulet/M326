@@ -139,6 +139,8 @@ public class AuswertungsGui extends JFrame {
 
         //Buttons
         JPanel buttons = new JPanel(new GridLayout(1, 4));
+        buttons.setPreferredSize(new Dimension(1920, 50));
+        buttons.setMaximumSize(new Dimension(1920, 50));
 
         JButton beenden = new JButton("Beenden");
         beenden.setBorder(BorderFactory.createLineBorder(Color.black, 3));
@@ -169,7 +171,7 @@ public class AuswertungsGui extends JFrame {
             }
         });
 
-        JButton speichern = new JButton("Speichern");
+        /*JButton speichern = new JButton("Speichern");
         speichern.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         speichern.addActionListener(new ActionListener() {
             /**
@@ -177,11 +179,11 @@ public class AuswertungsGui extends JFrame {
              *
              * @param e das Event
              */
-            @Override
+            /*@Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Speichern");
             }
-        });
+        });*/
 
         JButton nochmalsSpielen = new JButton("Nochmals spielen");
         nochmalsSpielen.setBorder(BorderFactory.createLineBorder(Color.black, 3));
@@ -201,7 +203,7 @@ public class AuswertungsGui extends JFrame {
 
         buttons.add(beenden);
         buttons.add(haupmenu);
-        buttons.add(speichern);
+        //buttons.add(speichern);
         buttons.add(nochmalsSpielen);
 
         panel.add(titelPanel);

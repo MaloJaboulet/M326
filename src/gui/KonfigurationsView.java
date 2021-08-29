@@ -3,6 +3,7 @@ package gui;
 import data.Playground;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,9 +42,9 @@ public class KonfigurationsView extends JFrame {
         mittelPanel.setBackground(new Color(52, 155, 235));
 
         //Die Auswahl zwischen Singleplayer und Muliplayer
-        JComboBox anzahlSpieler = new JComboBox(spielerAnzahl);
-        anzahlSpieler.setSize(200, 100);
-        anzahlSpieler.setSelectedIndex(0);
+        /*JComboBox anzahlSpieler = new JComboBox(spielerAnzahl);
+        anzahlSpieler.setSize(200, 50);
+        anzahlSpieler.setSelectedIndex(0);*/
 
         //Namen der Spieler
         JPanel spielerNamen = new JPanel(new GridLayout(1, 2, 20, 20));
@@ -124,9 +125,13 @@ public class KonfigurationsView extends JFrame {
             }
         });
 
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setMaximumSize(new Dimension(350,100));
+
         //Panel mit Buttons
-        JPanel buttons = new JPanel(new GridLayout(1, 2, 15, 15));
+        JPanel buttons = new JPanel(new GridLayout(1, 2, 5,5));
         buttons.setMaximumSize(new Dimension(450, 250));
+
 
 
         JButton verlassen = new JButton("Verlassen");
@@ -160,14 +165,17 @@ public class KonfigurationsView extends JFrame {
         buttons.add(verlassen);
         buttons.add(beenden);
 
+        buttonPanel.add(start);
+        buttonPanel.add(buttons);
+        buttonPanel.setAlignmentX(2.5f);
+
 
         mittelPanel.add(titel);
-        mittelPanel.add(anzahlSpieler);
+        //mittelPanel.add(anzahlSpieler);
         mittelPanel.add(spielerNamen);
         mittelPanel.add(spielfeld);
         mittelPanel.add(colRow);
-        mittelPanel.add(start);
-        mittelPanel.add(buttons);
+        mittelPanel.add(buttonPanel);
 
 
         this.add(mittelPanel);
